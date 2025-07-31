@@ -1,2 +1,15 @@
+[env]
+_.path = [
+	"./lua_modules/bin"
+]
+
 [tools]
 stylua = "latest"
+
+[tasks.build]
+description = "Build the CLI"
+run = "luarocks build"
+
+[tasks.test]
+description = "Run tests"
+run = "luarocks test"
