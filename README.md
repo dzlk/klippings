@@ -27,6 +27,12 @@ Run tests:
 luarocks test
 ```
 
+Run lint and checks:
+```
+stylua .
+luacheck src
+```
+
 ### Use mise for a comfortable development experience
 Install mise: https://mise.jdx.dev/installing-mise.html
 

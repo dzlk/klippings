@@ -13,7 +13,9 @@ dependencies = {
 	'lua >= 5.4',
 	'lua_cliargs >= 3.0',
 }
-build_dependencies = {}
+build_dependencies = {
+	'luacheck >= 1.2'
+}
 build = {
 	type = 'builtin',
 	modules = {

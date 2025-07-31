@@ -16,4 +16,5 @@ run = "luarocks test"
 
 [tasks.lint]
 description = "Run linter and formatter"
-run = "stylua ."
+run = "stylua . && luacheck src"
+
