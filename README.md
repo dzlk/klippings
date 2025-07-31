@@ -2,6 +2,13 @@
 
 A utility for parsing Kindle Clippings and saving them in the required format
 
+```
+klippings path/to/file
+
+## Show help
+klippings --help
+```
+
 ## Develop
 
 Install dependencies:

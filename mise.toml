@@ -13,3 +13,7 @@ run = "luarocks build"
 [tasks.test]
 description = "Run tests"
 run = "luarocks test"
+
+[tasks.lint]
+description = "Run linter and formatter"
+run = "stylua ."

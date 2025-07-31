@@ -1,32 +1,33 @@
-rockspec_format = "3.0"
+rockspec_format = '3.0'
 
-package = "klippings"
-version = "dev-1"
+package = 'klippings'
+version = 'dev-1'
 source = {
-	url = "*** please add URL for source tarball, zip or repository here ***",
+	url = '*** please add URL for source tarball, zip or repository here ***',
 }
 description = {
-	homepage = "*** please enter a project homepage ***",
-	license = "*** please specify a license ***",
+	homepage = '*** please enter a project homepage ***',
+	license = '*** please specify a license ***',
 }
 dependencies = {
-	"lua >= 5.4",
+	'lua >= 5.4',
+	'lua_cliargs >= 3.0',
 }
 build_dependencies = {}
 build = {
-	type = "builtin",
+	type = 'builtin',
 	modules = {
-		["klippings"] = "src/klippings.lua",
+		['klippings'] = 'src/klippings.lua',
 	},
 	install = {
 		bin = {
-			["klippings"] = "bin/klippings",
+			['klippings'] = 'bin/klippings',
 		},
 	},
 }
 test_dependencies = {
-	"busted",
+	'busted',
 }
 test = {
-	type = "busted",
+	type = 'busted',
 }
