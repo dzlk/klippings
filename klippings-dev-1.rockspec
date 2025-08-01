@@ -19,9 +19,9 @@ build_dependencies = {
 build = {
 	type = 'builtin',
 	modules = {
-		['klippings'] = 'src/klippings.lua',
-		['klippings.parser'] = 'src/parser.lua',
-		['klippings.strings'] = 'src/strings.lua',
+		['klippings'] = 'klippings/klippings.lua',
+		['klippings.parser'] = 'klippings/parser.lua',
+		['klippings.strings'] = 'klippings/strings.lua',
 	},
 	install = {
 		bin = {
