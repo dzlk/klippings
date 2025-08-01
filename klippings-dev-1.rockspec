@@ -14,12 +14,14 @@ dependencies = {
 	'lua_cliargs >= 3.0',
 }
 build_dependencies = {
-	'luacheck >= 1.2'
+	'luacheck >= 1.2',
 }
 build = {
 	type = 'builtin',
 	modules = {
 		['klippings'] = 'src/klippings.lua',
+		['klippings.parser'] = 'src/parser.lua',
+		['klippings.strings'] = 'src/strings.lua',
 	},
 	install = {
 		bin = {

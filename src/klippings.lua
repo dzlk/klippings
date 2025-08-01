@@ -1,5 +1,7 @@
 local cli = require('cliargs')
 
+local parser = require('klippings.parser')
+
 return function()
 	cli:set_name('klippings')
 	cli:argument('file', 'Path to Clippings.txt')
@@ -14,5 +16,31 @@ return function()
 		os.exit(1)
 	end
 
-	print(string.format('Running with file: %s', args.file))
+	print(string.format('Try open file: %s', args.file))
+	local fd = assert(io.open(args.file, 'r'))
+
+	local separator = '=========='
+	local modes = {
+		title = 1,
+		content = 2,
+	}
+	local mode = modes.title
+	for line in fd:lines() do
+		if mode == modes.title and line then
+			print(parser.extract_title(line))
+			mode = modes.content
+
+			goto continue
+		end
+		if string.sub(line, 1, #separator) == separator then
+			mode = modes.title
+		end
+
+		::continue::
+	end
+
+	fd:close()
+
+	--	print('Readed content:')
+	--	print(content)
 end
