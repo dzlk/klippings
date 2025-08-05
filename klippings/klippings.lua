@@ -22,18 +22,37 @@ return function()
 	local separator = '=========='
 	local modes = {
 		title = 1,
-		content = 2,
+		info = 2,
+		content = 3,
 	}
 	local mode = modes.title
 	for line in fd:lines() do
 		if mode == modes.title and line then
-			print(parser.extract_title(line))
+			local title, authors = parser.extract_title(line)
+
+			print('Title:' .. title)
+			print('Authors: ' .. table.concat(authors, ', '))
+			mode = modes.info
+
+			goto continue
+		end
+
+		if mode == modes.info then
+			print('Info line: \n' .. line)
 			mode = modes.content
 
 			goto continue
 		end
+
 		if string.sub(line, 1, #separator) == separator then
 			mode = modes.title
+			print(separator .. '\n')
+
+			goto continue
+		end
+
+		if mode == modes.content then
+			print('add content: \n' .. line)
 		end
 
 		::continue::
