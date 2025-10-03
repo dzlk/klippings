@@ -6,19 +6,18 @@ return function()
 	cli:set_name('klippings')
 	cli:argument('file', 'Path to Clippings.txt')
 
-	local args, err = cli:parse(arg)
-
-	print(args)
+	local args, err = cli:parse()
 
 	if not args and err then
 		-- something wrong happened and an error was printed
-		print(string.format('%s: %s; re-run with help for usage', cli.name, err))
+		io.write(string.format('%s: %s; re-run with help for usage', cli.name, err))
 		os.exit(1)
 	end
 
-	print(string.format('Try open file: %s', args.file))
+	io.write(string.format('Try open file: %s', args.file))
 	local fd = assert(io.open(args.file, 'r'))
 
+	-- FIXME: Move to parser
 	local separator = '=========='
 	local modes = {
 		title = 1,
@@ -30,6 +29,7 @@ return function()
 		if mode == modes.title and line then
 			local title, authors = parser.extract_title(line)
 
+			-- TODO: remove prints
 			print('Title:' .. title)
 			print('Authors: ' .. table.concat(authors, ', '))
 			mode = modes.info
@@ -38,6 +38,7 @@ return function()
 		end
 
 		if mode == modes.info then
+			-- TODO: remove prints
 			print('Info line: \n' .. line)
 			mode = modes.content
 
@@ -46,12 +47,14 @@ return function()
 
 		if string.sub(line, 1, #separator) == separator then
 			mode = modes.title
+			-- TODO: remove print
 			print(separator .. '\n')
 
 			goto continue
 		end
 
 		if mode == modes.content then
+			-- TODO: remove print
 			print('add content: \n' .. line)
 		end
 
