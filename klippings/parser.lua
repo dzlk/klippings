@@ -45,4 +45,11 @@ parser.extract_title = function(str)
 	return fix_title(title), authors
 end
 
+-- "– Ваш выделенный отрывок в месте 2147–2148 | Добавлено: воскресенье, 16 июня 2019 г. в 23:38:53"
+parser.info_pattern = '^%– %D+ (%d+%–%d+) | Добавлено: %D+ (%d+) (%D+) (%d+) г. в (%d+):(%d+):(%d+)$'
+parser.extract_info = function(str)
+	local loc, day, month, year, hours, minutes, seconds = string.match(trim(str), parser.info_pattern)
+	print(loc, day, month, year, hours, minutes, seconds)
+end
+
 return parser

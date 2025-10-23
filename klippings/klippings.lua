@@ -40,6 +40,7 @@ return function()
 		if mode == modes.info then
 			-- TODO: remove prints
 			print('Info line: \n' .. line)
+			parser.extract_info(line)
 			mode = modes.content
 
 			goto continue
