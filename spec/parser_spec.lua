@@ -65,8 +65,6 @@ describe('Test parsing info (Ru)) ::', function()
 		{ { 1001, 1050 }, '5 октября 2024', '00:15:55', '2024-10-05T00:15:55' },
 		{ { 1101, 1150 }, '11 ноября 2025', '09:07:32', '2025-11-11T09:07:32' },
 		{ { 1201, 1250 }, '22 декабря 2026', '14:38:49', '2026-12-22T14:38:49' },
-
-		-- TODO: add bad cases
 	}
 
 	for k = 1, #cases do
@@ -81,4 +79,16 @@ describe('Test parsing info (Ru)) ::', function()
 			assert.equal(expected, os.date('%Y-%m-%dT%H:%M:%S', actual_time))
 		end)
 	end
+
+	it('should return zero time if passed bad month', function()
+		local _, time = parser.extract_info(make_test_str(make_loc_str(0, 0), '13 март 2006', '00:00:00'))
+
+		assert.equal(0, time)
+	end)
+
+	it('should return zero time if passed incorrect time', function()
+		local _, time = parser.extract_info(make_test_str(make_loc_str(0, 0), '13 марта 2006', '25:00:00'))
+
+		assert.equal(0, time)
+	end)
 end)
