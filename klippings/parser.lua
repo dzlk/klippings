@@ -46,10 +46,56 @@ parser.extract_title = function(str)
 end
 
 -- "– Ваш выделенный отрывок в месте 2147–2148 | Добавлено: воскресенье, 16 июня 2019 г. в 23:38:53"
-parser.info_pattern = '^%– %D+ (%d+%–%d+) | Добавлено: %D+ (%d+) (%D+) (%d+) г. в (%d+):(%d+):(%d+)$'
+local pattern = '^– %D+ (%d+)–(%d+) | Добавлено: %D+ (%d+) (%D+) (%d+) г. в (%d+):(%d+):(%d+)$'
+local months = {
+	'января',
+	'февраля',
+	'марта',
+	'апреля',
+	'мая',
+	'июня',
+	'июля',
+	'августа',
+	'сентября',
+	'октября',
+	'ноября',
+	'декабря',
+}
+local get_month_number = function(month)
+	for num, name in pairs(months) do
+		if month == name then
+			return num
+		end
+	end
+end
 parser.extract_info = function(str)
-	local loc, day, month, year, hours, minutes, seconds = string.match(trim(str), parser.info_pattern)
-	print(loc, day, month, year, hours, minutes, seconds)
+	local loc_start, loc_end, day, month, year, hour, minute, second = string.match(trim(str), pattern)
+
+	month = get_month_number(month)
+
+	local time = 0
+	if day and month and year and hour and minute and second then
+		time = os.time({
+			year = year,
+			month = month,
+			day = day,
+			hour = hour,
+			min = minute,
+			sec = second,
+		})
+
+		-- validate time
+		-- FIXME: lint warning
+		if os.time(os.date('*t', time)) ~= time then
+			time = 0
+		end
+	end
+
+	loc_start = tonumber(loc_start)
+	loc_end = tonumber(loc_end)
+	local loc = loc_start and loc_end and { loc_start, loc_end } or { 0, 0 }
+
+	return loc, time
 end
 
 return parser
